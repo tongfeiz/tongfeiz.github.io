@@ -1,0 +1,464 @@
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(38, 38, 38);
+    pointer-events: auto; /* Enable link interactions */
+}
+
+/* Layout and Container Styles */
+#canvas-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Move canvas to back */
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 300vh;
+}
+
+/* Typography and Header Styles */
+.header {
+    font-size: 5rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    mix-blend-mode: difference;
+    z-index: 100;
+}
+
+
+
+
+.subheader {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.portfolio {
+    background: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    transition: transform 0.3s ease, background 0.3s ease;
+    
+}
+.portfolio:hover {
+    background: #da0000;
+}
+
+.time {
+    font-size: 23px;
+    font-weight: 200;
+    margin-top: 3px;
+}
+
+.menu {
+    position: relative;
+    left: 730px;
+    bottom: 206px;
+    font-weight: 700;
+    font-size: 18.36px;
+    pointer-events: auto; /* Enable menu interactions */
+}
+
+.menu a {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.4s ease, color 0.2s ease;
+    color:black;
+}
+
+.menu a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    transition: width 0.4s ease, background 0.2s ease;
+}
+
+.menu a:hover {
+    transform: scale(1.08);
+    color:#da0000;
+}
+
+.menu a:hover::after {
+    width: 100%;
+    background-color: #da0000;
+}
+
+
+/*----------------------------------------------GREETINGS!----------------------------------------------------*/
+.greetings {
+    font-size: 5rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin-top: 360px;
+}
+.greetings2 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    text-align: center;
+}
+.greetings3 {
+    font-size: 3rem;
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin-left:50px;
+}
+
+/* ---------------------------------------DESCRIPTIONS--------------------------------------- */
+.bigdesc1 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-left: 520px;
+    margin-top: -280px;
+}
+.smalldesc1 {
+    font-size: 1.8rem;
+    font-weight: 100;
+    letter-spacing: 0.04em;
+    margin-left: 520px;
+    margin-top: 20px;
+}
+.btn1 {
+    margin-left: 700px;
+    margin-top: 30px;
+}
+
+
+.bigdesc2 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-left: 0px;
+    margin-top: -510px;
+}
+.smalldesc2 {
+    font-size: 1.8rem;
+    font-weight: 100;
+    letter-spacing: 0.04em;
+    margin-left: 0px;
+    margin-top: 20px;
+}
+.btn2 {
+    margin-left: 150px;
+    margin-top: 30px;
+}
+
+.brandname {
+    font-size:1.2rem;
+    font-weight: 100;
+    margin-top: 25px;
+    margin-left: 13px;
+}
+
+.brandname a {
+    display: block;  /* Makes each link stack vertically */
+    margin-bottom: 2rem;  /* Adds consistent spacing between each brand name */
+}
+
+/* Remove the margin from the last link */
+.brandname a:last-child {
+    margin-bottom: 0;
+}
+
+.storelinks {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 150px;  /* Move the margin here instead of on individual images */
+    width: fit-content;
+}
+
+.storelinks a {
+    display: block;
+    width: fit-content;
+}
+
+.storelinks img{
+    transition: transform 0.3s ease;
+}
+
+.storelinks img:hover {
+    transform: scale(1.2);
+    transform-origin: center
+}
+
+.bigdesc3 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-left: 560px;
+    margin-top: -340px;
+}
+.smalldesc3 {
+    font-size: 1.8rem;
+    font-weight: 100;
+    letter-spacing: 0.04em;
+    margin-left: 560px;
+    margin-top: 20px;
+}
+.btn3 {
+    margin-left: 750px;
+    margin-top: 30px;
+}
+
+.getintouch {
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: center;
+    margin-top: 260px;
+}
+.contact-container {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 420px;
+    gap: 1rem;  /* Space between icon and text */
+    margin-bottom: 2rem;  /* Space between each contact item */
+}
+
+
+/* Update text styles */
+.emailtext, .linkedintext, .instagramtext {
+    margin: 0;  /* Remove individual margins */
+    font-size: 1.5rem;
+    font-weight: 150;
+}
+
+.emailtext a, .linkedintext a, .instagramtext a {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.4s ease, color 0.2s ease;
+    color:black;
+}
+
+.emailtext a::after, .linkedintext a::after, .instagramtext a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.emailtext a:hover::after, .linkedintext a:hover::after, .instagramtext a:hover::after {
+    width: 100%;
+}
+
+
+
+/*--------------------------------------Click on button---------------------------------------*/
+.view-button {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    font-family: "Courier New", monospace;
+    font-size: 1.2rem;
+    padding: 0.8rem 1.2rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.view-button:hover {
+    opacity: 0.9;
+    transform: scale(1.1);
+}
+
+.view-button:active {
+    transform: scale(0.95);
+}
+
+
+/* --------------------Footer Styles-------------------- */
+.footer {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 0.8rem;
+}
+
+/* Side Text Styles */
+.sidetext {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    position: fixed;
+    left: 2rem;
+    top: 37rem;
+    transform: translateY(-50%) rotate(180deg);
+    font-size: 1rem;
+    font-weight: 200;
+}
+
+/* SVG and Graphics Styles */
+.footer svg {
+    flex-shrink: 0;
+}
+
+/* --------------------------------------------------images------------------------------------------------------ */
+/* --------------------------------------------------images------------------------------------------------------ */
+/* --------------------------------------------------images------------------------------------------------------ */
+.homeicon {
+    position: fixed;
+    left: 2rem;
+    margin-top: 1rem;
+}
+
+.homeicon img {
+    transition: transform 0.3s ease;
+}
+
+.homeicon img:hover {
+    transform: scale(1.2);
+    transform-origin: center
+}
+
+.leftbarcode {
+    position: fixed;
+    left: 2rem;
+    margin-top: 12rem;
+}
+
+.topbarcode {
+    position: relative;
+    left: 555px;
+    bottom: 140px;
+}
+
+.leftsigil {
+    position: fixed;
+    left: 1rem;
+    margin-top: 19rem;
+}
+
+.packback {
+    position: relative;
+    margin-top: 100px;
+    z-index: 1;
+}
+
+.packfront {
+    position: relative;
+    margin-bottom: -120px;
+    margin-left:-140px;
+    z-index: 2;
+}
+
+.stairs {
+    margin-top: 200px;
+    display: block;
+    margin-left:630px;
+}
+
+.bookstorepfp, .spirepfp, .revinkpfp {
+    display: block;
+    margin-top: 20px;  /* Keep just this margin if needed */
+    margin-left: 0;    /* Remove the 150px margin */
+}
+
+.revinkpfp {
+   
+    border-style: solid;
+    border-width: 0.01px;
+    border-color: #979797;
+}
+
+.album-container {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    /*background-color: red;*/
+}
+
+/* Keep all your existing album styles the same */
+.album1, .album2, .album3, .album4 {
+    display: block;
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
+}
+
+.album1 {
+    margin-top: 200px;
+    z-index: 1;
+}
+
+.album2 {
+    margin-top: -230px;
+    margin-left: 50px;
+    z-index: 2;
+}
+
+.album3 {
+    margin-top: -230px;
+    margin-left: 100px;
+    z-index: 3;
+}
+
+.album4 {
+    margin-top: -230px;
+    margin-left:150px;
+    z-index: 4;
+
+}
+
+
+.album1:hover, .album2:hover, .album3:hover, .album4:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+.album1:active, .album2:active, .album3:active, .album4:active {
+    transform: translateY(-200px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+
+.emailicon, .linkedinicon, .instagramicon {
+    margin: 0;  /* Remove individual margins */
+    width: fit-content;
+}
+
+
+
+/* --------------------------- Interactive elements --------------------------- */
+.homeicon, .leftbarcode, .topbarcode, .leftsigil {
+    pointer-events: auto; /* Enable image interactions if needed */
+}
+

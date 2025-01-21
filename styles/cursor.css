@@ -1,0 +1,89 @@
+/* Hide default cursor */
+* {
+    cursor: none;
+}
+
+.custom-cursor {
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    z-index: 99999;
+    mix-blend-mode: difference;
+    left: 0;
+    top: 0;
+}
+
+.custom-cursor {
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+}
+
+.cursor-circles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.cursor-circles::before,
+.cursor-circles::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #da0000;
+    border-radius: 50%;
+}
+
+.cursor-circles::before {
+    width: 40px;
+    height: 40px;
+}
+
+.cursor-circles::after {
+    width: 20px;
+    height: 20px;
+}
+
+.cursor-cross {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.cursor-cross::before,
+.cursor-cross::after {
+    content: '';
+    position: absolute;
+    background: #da0000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-cross::before {
+    width: 44px;
+    height: 2px;
+}
+
+.cursor-cross::after {
+    width: 2px;
+    height: 44px;
+}
+
+.coordinates {
+    position: fixed;
+    font-size: 0.8rem;
+    color: #666;
+    pointer-events: none;
+    z-index: 1000;
+    padding: 10px;
+    top: 0;
+    left: 0;
+}

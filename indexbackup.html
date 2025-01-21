@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://use.typekit.net/map4iqn.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 300vh;
+        }
+
+        .header {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+        }
+
+        .subheader {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .harmony {
+            background: black;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-weight: bold;
+        }
+
+        .coordinates {
+            position: fixed;
+            font-size: 0.8rem;
+            color: #666;
+            pointer-events: none;
+            z-index: 1000;
+            padding: 10px;
+            top: 0;
+            left: 0;
+            /* Remove any transitions to prevent bouncing */
+        }
+
+        /* Hide default cursor */
+        * {
+            cursor: none;
+        }
+
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor {
+            pointer-events: none;
+            width: 40px;
+            height: 40px;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            transform-origin: 20px 20px; /* Center point of the cursor */
+        }
+
+        .cursor-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cursor-circles::before,
+        .cursor-circles::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #000;
+            border-radius: 50%;
+        }
+
+        .cursor-circles::before {
+            width: 40px;
+            height: 40px;
+        }
+
+        .cursor-circles::after {
+            width: 20px;
+            height: 20px;
+        }
+
+        .cursor-cross {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cursor-cross::before,
+        .cursor-cross::after {
+            content: '';
+            position: absolute;
+            background: #000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-cross::before {
+            width: 44px;
+            height: 2px;
+        }
+
+        .cursor-cross::after {
+            width: 2px;
+            height: 44px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 0.8rem;
+        }
+
+        .unveiling {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div id="canvas-container"></div>
+
+<div class="content">
+    <div class="container">
+        <div class="header">TONGFEI</div>
+        <div class="subheader">
+            <div class="harmony">Portfolio</div>
+            <div class="time">12:50:23</div>
+        </div>
+
+        <div class="unveiling">Unveiling the Power Unveiling the Power</div>
+
+        <div class="coordinates"></div>
+        <div class="custom-cursor">
+            <div class="cursor-circles"></div>
+            <div class="cursor-cross"></div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-text">
+                <p>All information presented in this poster is intended</p>
+                <p>for informational purposes only.</p>
+                <p>SANDEEP YAJURVEDI</p>
+                <p>EST. 2024</p>
+            </div>
+            <svg width="50" height="50" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="black" fill="none" stroke-width="1"/>
+                <circle cx="12" cy="12" r="5" stroke="black" fill="none" stroke-width="1"/>
+                <line x1="12" y1="2" x2="12" y2="22" stroke="black" stroke-width="1"/>
+                <line x1="2" y1="12" x2="22" y2="12" stroke="black" stroke-width="1"/>
+            </svg>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+
+<script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        physicallyCorrectLights: true
+    });
+
+    const container = document.getElementById('canvas-container');
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    // Enhanced lighting setup
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+
+    const directionalLight1 = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight1.position.set(5, 5, 5);
+    scene.add(directionalLight1);
+
+    const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+    directionalLight2.position.set(-5, -5, 3);
+    scene.add(directionalLight2);
+
+    // Add point lights for more dynamic reflections
+    const pointLight1 = new THREE.PointLight(0xffffff, 0.5);
+    pointLight1.position.set(3, 3, 3);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0xffffff, 0.3);
+    pointLight2.position.set(-3, -3, 3);
+    scene.add(pointLight2);
+
+    camera.position.z = 8;
+
+    let scrollY = 0;
+    let targetScrollY = 0;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+
+    document.addEventListener('mousemove', (event) => {
+        // Calculate coordinates relative to center of page
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const relativeX = event.clientX - centerX;
+        const relativeY = event.clientY - centerY;
+
+        mouseX = relativeX / centerX;  // For 3D object rotation
+        mouseY = relativeY / centerY;
+
+        // Update coordinates div - offset it from the cursor
+        const coordsDiv = document.querySelector('.coordinates');
+        // Reduced offset from 25px to 15px to bring coordinates closer to cursor
+        coordsDiv.style.transform = `translate(${event.clientX + 40}px, ${event.clientY + 15}px)`;
+        coordsDiv.innerHTML = `dX: ${relativeX.toFixed(2)} px<br>dY: ${relativeY.toFixed(2)} px`;
+
+        // Update custom cursor position - exact center on mouse
+        const cursor = document.querySelector('.custom-cursor');
+        cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+    });
+
+    // Add event listener for cursor leaving the window
+    document.addEventListener('mouseleave', () => {
+        const cursor = document.querySelector('.custom-cursor');
+        const coordsDiv = document.querySelector('.coordinates');
+        cursor.style.display = 'none';
+        coordsDiv.style.display = 'none';
+    });
+
+    // Show cursor when entering window
+    document.addEventListener('mouseenter', () => {
+        const cursor = document.querySelector('.custom-cursor');
+        const coordsDiv = document.querySelector('.coordinates');
+        cursor.style.display = 'block';
+        coordsDiv.style.display = 'block';
+    });
+
+    window.addEventListener('scroll', () => {
+        targetScrollY = window.scrollY;
+    });
+
+    // Create custom metallic material
+    const createMetallicMaterial = () => {
+        return new THREE.MeshPhysicalMaterial({
+            color: 0x888888,
+            metalness: 0.9,
+            roughness: 0.2,
+            reflectivity: 1.0,
+            clearcoat: 0.8,
+            clearcoatRoughness: 0.2,
+            envMapIntensity: 1.0
+        });
+    };
+
+    const objLoader = new THREE.OBJLoader();
+    let loadedObject = null;
+
+    objLoader.load(
+        './models/homepagesigil.obj',
+        function (object) {
+            object.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.material = createMetallicMaterial();
+                }
+            });
+
+            const box = new THREE.Box3().setFromObject(object);
+            const center = box.getCenter(new THREE.Vector3());
+            object.position.sub(center);
+
+            object.rotation.set(0, 0, 0);
+
+            object.scale.set(0.35, 0.35, 0.15);
+
+            object.userData.initialY = object.position.y;
+
+            loadedObject = object;
+            scene.add(object);
+        },
+        function (xhr) {
+            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        },
+        function (error) {
+            console.error('Error loading OBJ:', error);
+
+            // Fallback to loading alternative model
+            objLoader.load(
+                'homepagesigil.obj',
+                function (object) {
+                    object.traverse(function (child) {
+                        if (child instanceof THREE.Mesh) {
+                            child.material = createMetallicMaterial();
+                        }
+                    });
+
+                    const box = new THREE.Box3().setFromObject(object);
+                    const center = box.getCenter(new THREE.Vector3());
+                    object.position.sub(center);
+
+                    object.rotation.set(0, 0, 0);
+                    object.scale.set(0.4, 0.4, 0.4);
+
+                    loadedObject = object;
+                    scene.add(object);
+                }
+            );
+        }
+    );
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // More subtle scroll animation
+        scrollY += (targetScrollY - scrollY) * 0.05;
+
+        if (loadedObject) {
+            targetRotationY = mouseX * 0.5;
+            targetRotationX = -mouseY * 0.5;
+
+            loadedObject.rotation.y += (targetRotationY - loadedObject.rotation.y) * 0.1;
+            loadedObject.rotation.x += (targetRotationX - loadedObject.rotation.x) * 0.1;
+
+            // Reduced scroll factor for more subtle movement
+            const scrollFactor = 0.05;
+            const targetY = loadedObject.userData.initialY + (scrollY * scrollFactor);
+            loadedObject.position.y += (targetY - loadedObject.position.y) * 0.05;
+        }
+
+        // Animate point lights for dynamic reflections
+        const time = Date.now() * 0.001;
+        pointLight1.position.x = Math.sin(time) * 0.5;
+        pointLight1.position.y = Math.cos(time) * 0.5;
+        pointLight2.position.x = Math.sin(time + Math.PI) * 0.5;
+        pointLight2.position.y = Math.cos(time + Math.PI) * 0.5;
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function adjustLighting(options = {}) {
+        const {
+            ambientIntensity = 0.3,
+            directional1Intensity = 1.2,
+            directional2Intensity = 0.8,
+            directional1Position = { x: 5, y: 5, z: 5 },
+            directional2Position = { x: -5, y: -5, z: 3 }
+        } = options;
+
+        ambientLight.intensity = ambientIntensity;
+        directionalLight1.intensity = directional1Intensity;
+        directionalLight2.intensity = directional2Intensity;
+        directionalLight1.position.set(
+            directional1Position.x,
+            directional1Position.y,
+            directional1Position.z
+        );
+        directionalLight2.position.set(
+            directional2Position.x,
+            directional2Position.y,
+            directional2Position.z
+        );
+    }
+</script>
+</body>
+</html>  
